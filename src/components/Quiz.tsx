@@ -117,8 +117,8 @@ const Quiz: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex flex-col">
-      <div className="flex-1 max-w-5xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-8 flex flex-col h-screen">
-        <div className="mb-3 sm:mb-6">
+      <div className="flex-1 max-w-5xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-8 flex flex-col">
+        <div className="mb-3 sm:mb-6 flex-shrink-0">
           <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-start">
             <div className="max-w-2xl">
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 tracking-tight mb-1 sm:mb-2">
@@ -161,8 +161,8 @@ const Quiz: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col">
-          <div className="flex-1 bg-white/90 rounded-2xl border border-gray-100 shadow-sm p-3 sm:p-6 mb-2 sm:mb-4 overflow-hidden">
+        <div className="flex-1 flex flex-col min-h-0">
+          <div className="bg-white/90 rounded-2xl border border-gray-100 shadow-sm p-3 sm:p-6 mb-2 sm:mb-4">
             <Question
               question={questions[currentQuestionIndex]}
               selectedAnswer={selectedAnswers[currentQuestionIndex]}
@@ -172,7 +172,7 @@ const Quiz: React.FC = () => {
           </div>
 
           {showAnswer && (
-            <div className="flex justify-center pb-2 sm:pb-4">
+            <div className="flex justify-center pb-2 sm:pb-4 flex-shrink-0">
               <button
                 onClick={handleNextQuestion}
                 className="group relative inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 text-base sm:text-lg font-medium text-white bg-blue-600 rounded-full overflow-hidden transition-all duration-300 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"

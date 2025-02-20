@@ -5,52 +5,28 @@ const Question: React.FC<QuestionProps> = ({
   question,
   selectedAnswer,
   onAnswerSelect,
-  showAnswer
+  showAnswer,
 }) => {
-  console.log('Question Component Render:', {
-    currentQuestion: question.question,
-    selectedAnswer,
-    showAnswer,
-    correctAnswer: question.correctAnswer
-  });
-
-  const isAnswerSelected = selectedAnswer !== undefined && selectedAnswer !== null;
-
   const handleClick = (index: number) => {
-    console.log('Click Handler:', {
-      clickedIndex: index,
-      currentSelectedAnswer: selectedAnswer,
-      isClickable: !isAnswerSelected
-    });
-
-    if (!isAnswerSelected) {
-      console.log('Calling onAnswerSelect with index:', index);
+    if (!showAnswer) {
       onAnswerSelect(index);
     }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent, index: number) => {
-    console.log('KeyDown Event:', {
-      key: event.key,
-      index,
-      selectedAnswer
-    });
-
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      if (!isAnswerSelected) {
-        onAnswerSelect(index);
-      }
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleClick(index);
     }
   };
 
   return (
     <div className="flex flex-col h-full">
-      <h2 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">
+      <h2 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 mb-4 sm:mb-6 flex-shrink-0">
         {question.question}
       </h2>
 
-      <div className="flex-1 flex flex-col space-y-2 sm:space-y-3">
+      <div className="flex flex-col space-y-2 sm:space-y-3 overflow-y-auto pr-1">
         {question.options.map((option, index) => {
           const isSelected = selectedAnswer === index;
           const isCorrect = showAnswer && index === question.correctAnswer;
@@ -59,10 +35,11 @@ const Question: React.FC<QuestionProps> = ({
           return (
             <button
               key={index}
-              onClick={() => !showAnswer && onAnswerSelect(index)}
+              onClick={() => handleClick(index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
               disabled={showAnswer}
               className={`
-                relative w-full text-left p-3 sm:p-4 rounded-xl border transition-all duration-200
+                relative w-full text-left p-3 sm:p-4 rounded-xl border transition-all duration-200 flex-shrink-0
                 ${showAnswer ? 'cursor-default' : 'hover:border-blue-300 hover:bg-blue-50/50 cursor-pointer'}
                 ${isSelected
                   ? isWrong
@@ -75,6 +52,8 @@ const Question: React.FC<QuestionProps> = ({
                     : 'border-gray-200 bg-white'
                 }
               `}
+              aria-pressed={isSelected}
+              tabIndex={showAnswer ? -1 : 0}
             >
               <div className="flex items-start">
                 <div className={`
@@ -117,7 +96,7 @@ const Question: React.FC<QuestionProps> = ({
       </div>
 
       {showAnswer && (
-        <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-100">
+        <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-100 flex-shrink-0">
           <div className="text-sm sm:text-base text-gray-700">
             <span className="font-medium text-gray-900">Giải thích: </span>
             {question.explanation}
