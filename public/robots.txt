@@ -1,0 +1,6 @@
+# Cho phép tất cả các robot tìm kiếm
+User-agent: *
+Allow: /
+
+# Vị trí của sitemap
+Sitemap: https://legal-quiz.onrender.com/sitemap.xml
