@@ -627,5 +627,14 @@ export function generateSimilarQuestion(originalQuestion: Question): Question {
 
 // Hàm để lấy tất cả câu hỏi
 export function getRandomQuestions(): Question[] {
-  return questions;
+  // Create a copy of the questions array to avoid mutating the original
+  const shuffledQuestions = [...questions];
+
+  // Fisher-Yates shuffle algorithm
+  for (let i = shuffledQuestions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledQuestions[i], shuffledQuestions[j]] = [shuffledQuestions[j], shuffledQuestions[i]];
+  }
+
+  return shuffledQuestions;
 }
